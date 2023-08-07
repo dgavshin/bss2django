@@ -165,6 +165,11 @@ class TagConverter:
             a static link if needed.
             """
             url = match.group(1)
+            if url.startswith('"') or url.startswith("'"):
+                url = url[1:-1]
+            elif url.startswith("&quot;"):
+                url = url[6:-6]
+
             if not url.startswith("http"):
                 url = self._convert_bss_link(url)
                 url = f'{{% static "{url}" %}}'
